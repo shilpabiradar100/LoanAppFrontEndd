@@ -1,0 +1,281 @@
+
+{{personalDetailsForm.value | json}}
+<mat-stepper linear>
+   
+
+
+
+
+<!-- ************************************************************************************* -->
+    <!-- step1 : personal Detail form  -->
+   <mat-step  [stepControl]="personalDetailsForm">
+      <form [formGroup]="personalDetailsForm" >
+         <ng-template matStepLabel>Personal Details</ng-template>
+<!-- 
+         <mat-form-field appearance="outline">
+
+         </mat-form-field> -->
+         <!-- controls-->
+         <mat-form-field appearance="fill">
+            <mat-label> Name </mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="personalDetailsForm.get('name')?.hasError('required')">
+                Name is required.
+            </mat-error>
+         </mat-form-field>
+
+         <!-- email -->
+         <mat-form-field>
+            <mat-label> email </mat-label>
+            <input matInput formControlName="email">
+            <mat-error>
+                Email is required.
+            </mat-error>
+         </mat-form-field>
+
+         <!-- phone -->
+         <mat-form-field>
+            <mat-label> phone </mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="personalDetailsForm.get('phone')?.hasError('required')">
+                phone is required value.
+            </mat-error>
+            <mat-error
+                *ngIf=" personalDetailsForm.get('phone')?.dirty &&
+                personalDetailsForm.get('phone')?.hasError('required')">
+               {{personalDetailsForm.get('phone')?.errors?.['inValidPhoneNumber']}}
+            </mat-error>
+         </mat-form-field>
+
+
+         <!-- date of birth -->
+        
+     <mat-form-field appearance="fill">
+                <mat-label>Date of Birth</mat-label>
+           <input matInput 
+                     [matDatepicker]="dobPicker"
+                       formControlName="dob">
+         
+            <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+             <mat-datepicker #dobPicker></mat-datepicker>
+
+            <!-- Required Error -->
+          <mat-error *ngIf="personalDetailsForm.get('dob')?.hasError('required')">
+               Date of birth is required.
+          </mat-error>
+
+               <!-- Custom Validation Error -->
+           <mat-error *ngIf="personalDetailsForm.get('dob')?.hasError('invalidValidDateOfBirth')">
+              {{ personalDetailsForm.get('dob')?.errors?.['invalidValidDateOfBirth'] }}
+           </mat-error>
+       </mat-form-field>
+
+         <!-- gender -->
+         <mat-form-field>
+            <mat-label> Gender </mat-label>
+            <mat-select formControlName="gender">
+                <mat-option value="female"> Female </mat-option>
+                <mat-option value="male"> male </mat-option>
+                <mat-option value="others"> others </mat-option>
+            </mat-select>
+         </mat-form-field>
+
+                 
+         <!-- marital Status -->
+          <mat-form-field>
+            <mat-label> Marital Status</mat-label>
+            <mat-select formControlName="maritalStatus">
+                <mat-option value="single"> Single </mat-option>
+                <mat-option value="married"> Married </mat-option>
+                <mat-option value="others"> Others </mat-option>
+            </mat-select>
+         </mat-form-field>
+
+         <button mat-raised-button matStepperNext type="button" color="primary">Next</button>
+      </form>
+   </mat-step>
+
+   <!-- ******************************************************************************************************************************* -->
+   <!-- step 2 : Document upload form  -->
+    <mat-step [stepControl]="documentUploadForm">
+      <form [formGroup]="documentUploadForm" >
+         <ng-template matStepLabel> Document UploadForm </ng-template>
+         <!-- Pancard -->
+            <mat-form-field>
+                <mat-label> Pan Number </mat-label>
+                <input matInput formControlName="pan">
+
+                <mat-error
+                  *ngIf="documentUploadForm.get('pan')?.hasError('required')">
+                   Pan number is required
+                </mat-error>
+               
+
+                <mat-error
+                     *ngIf="documentUploadForm.get('pan')?.hasError('inValidPancard') && documentUploadForm.get('pan')?.dirty">
+                     {{documentUploadForm.get('pan')?.errors?.['inValidPancard']}}
+                </mat-error>
+            </mat-form-field>
+
+            <!-- adhar -->
+             <mat-form-field>
+                <mat-label> AdharNumber </mat-label>
+                <input matInput formControlName="adhar">
+
+                <mat-error
+                    *ngIf="documentUploadForm.get('adhar')?.hasError('required')" >
+                  Adhar number is required
+                </mat-error>
+                 <mat-error
+                    *ngIf="documentUploadForm.get('adhar')?.hasError('invalidAdharNumber')" >
+                       {{documentUploadForm.get('adhar')?.errors?.['invalidAdharNumber']}}
+                </mat-error>
+            </mat-form-field>
+
+
+
+            <button mat-raised-button  matStepperPrevious color="primary" class="mr-3">
+                Back
+           </button>
+            <button mat-raised-button  matStepperNext color="primary"> 
+               Next
+            </button>
+      </form>
+
+    </mat-step>
+
+    <!-- ********************************************************************************************************************* -->
+    <!-- step 3 : Address form  -->
+     <mat-step [stepControl]="addressDetailForm">
+        <form [formGroup]="addressDetailForm">
+           <ng-template  matStepLabel>  Address Details</ng-template>
+           <div class="row">
+             <div class="col-md-6">
+                <h3> Permanent Address</h3> 
+                   <div formGroupName="permanentAddress"> 
+                      <mat-form-field>
+                         <mat-label> Address line 1</mat-label>
+                         <input type="text" matInput formControlName="addressline1">
+                         <mat-error  *ngIf="addressDetailForm.get('permanentAddress.addressline1')?.hasError('required')">
+                           Address line 1 ius required field
+                         </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                         <mat-label> Address line 2</mat-label>
+                         <input type="text" matInput formControlName="addressline2">
+                         <mat-error  *ngIf="addressDetailForm.get('permanentAddress.addressline2')?.hasError('required')">
+                           Address line 2 ius required field
+                         </mat-error>
+                      </mat-form-field>
+
+                       <mat-form-field>
+                         <mat-label> City</mat-label>
+                         <input type="text" matInput formControlName="city">
+                         <mat-error  *ngIf="addressDetailForm.get('permanentAddress.city')?.hasError('required')">
+                           City is reuired field.
+                         </mat-error>
+                      </mat-form-field>
+
+                       <mat-form-field>
+                         <mat-label> State</mat-label>
+                         <input type="text" matInput formControlName="state">
+                         <mat-error  *ngIf="addressDetailForm.get('permanentAddress.state')?.hasError('required')">
+                           State line is required field.
+                         </mat-error>
+                      </mat-form-field>
+
+                      
+                       <mat-form-field>
+                         <mat-label> PinCode</mat-label>
+                         <input type="text" matInput formControlName="pincode">
+                         <mat-error  *ngIf="addressDetailForm.get('permanentAddress.pincode')?.hasError('required')">
+                           Pincode line  is required field.
+                         </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                         <mat-label> Country</mat-label>
+                        <mat-select formControlName="country">
+                           <mat-option *ngFor="let country of contriesArr"  [value]="country.name">
+                             {{country.name}}
+
+                           </mat-option>
+                        </mat-select>
+                          <mat-error  *ngIf="addressDetailForm.get('permanentAddress.country')?.hasError('required')">
+                           Country Name  is required field.
+                         </mat-error>
+                      </mat-form-field>
+                   </div>
+             </div>
+
+
+             <div class="col-md-6">
+                <h3> Current Address </h3>
+                 <div formGroupName="currentAddress"> 
+                     <mat-form-field>
+                         <mat-label> Address line 1</mat-label>
+                         <input type="text" matInput formControlName="addressline1">
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.addressline1')?.hasError('required')">
+                           Address line 1 ius required field
+                         </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                         <mat-label> Address line 2</mat-label>
+                         <input type="text" matInput formControlName="addressline2">
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.addressline2')?.hasError('required')">
+                           Address line 2 ius required field
+                         </mat-error>
+                      </mat-form-field>
+
+                       <mat-form-field>
+                         <mat-label> City</mat-label>
+                         <input type="text" matInput formControlName="city">
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.city')?.hasError('required')">
+                           City is reuired field.
+                         </mat-error>
+                      </mat-form-field>
+
+                       <mat-form-field>
+                         <mat-label> State</mat-label>
+                         <input type="text" matInput formControlName="state">
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.state')?.hasError('required')">
+                           State line is required field.
+                         </mat-error>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                         <mat-label> PinCode</mat-label>
+                         <input type="text" matInput formControlName="pincode">
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.pincode')?.hasError('required')">
+                           Pincode line  is required field.
+                         </mat-error>
+                      </mat-form-field>
+
+
+                      <mat-form-field>
+                         <mat-label> Country</mat-label>
+                        <mat-select formControlName="country">
+                           <mat-option *ngFor="let country of contriesArr"  [value]="country.name">
+                             {{country.name}}
+
+                           </mat-option>
+                        </mat-select>
+                         <mat-error  *ngIf="addressDetailForm.get('currentAddress.country')?.hasError('required')">
+                           Country Name  is required field.
+                         </mat-error>
+                      </mat-form-field>
+                 </div>
+             </div>
+           </div>
+           
+           <button mat-raised-button  matStepperPrevious type="button" color="primary" class="mr-3">
+                Back
+           </button>
+            <button mat-raised-button  matStepperNext  type="button" color="primary"> 
+               Next
+            </button>
+        </form>
+     </mat-step>
+</mat-stepper>
